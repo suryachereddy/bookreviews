@@ -1,0 +1,23 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Book review- HOMEPAGE
+{% endblock %}
+
+{% block body %}
+<div class="container">
+<h1> Please Sign-up</h1>
+</div>
+<form action="{{url_for('register')}}" method="POST">
+    <div class="form-group">
+        <input type="text" name="username">
+    </div>
+    <div class="form-group">
+        <input type="password" name="password">
+    </div>
+    <div class="form-group">
+        <button class="btn btn-primary">Sign-up</button>
+        <br><p>{{message}}</p>
+    </div>
+</form>
+{% endblock %}
