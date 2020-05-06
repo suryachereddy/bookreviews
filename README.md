@@ -1,3 +1,3 @@
 # Project 1
 
-Web Programming with Python and JavaScript
+This project is made for the Harvard C50's Web Programming with Python and JavaScript course from edx.org
