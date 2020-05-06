@@ -18,10 +18,10 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 
 # Set up database (uncomment below before push)
-#engine = create_engine(os.getenv("DATABASE_URL"))
+engine = create_engine(os.getenv("DATABASE_URL"))
 
 #comment this before push
-engine=create_engine("postgresql://postgres:password@localhost/project1")
+#engine=create_engine("postgresql://postgres:password@localhost/project1")
 db = scoped_session(sessionmaker(bind=engine))
 
 
