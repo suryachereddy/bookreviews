@@ -1,10 +1,11 @@
 {% extends "layout.html" %}
 
 {% block title %}
-    Book review
+    Book Review- Log-in
 {% endblock %}
 
 {% block body %}
+<div class="container">
 <h1> LOGIN HERE</h1>
 <form action="{{ url_for('home') }}" method="POST">
     <div class="form-group">
@@ -17,6 +18,8 @@
     <div class="form-group">
         <button class="btn btn-primary">login</button>
     </div>
-</form>
+</form><br>
+<a href="{{url_for('signup')}}">New? Register Here.</a>
+</div>
 <p style="color: red;">{{message}}</p>
 {% endblock %}

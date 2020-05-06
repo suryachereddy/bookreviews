@@ -1,3 +1,6 @@
+--ONLY FOR REFERENCE
+
+
 --login validate
 SELECT passhash FROM users WHERE username=:username
 ---isUserUnique
