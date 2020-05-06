@@ -21,7 +21,7 @@ Session(app)
 #engine = create_engine(os.getenv("DATABASE_URL"))
 
 #comment this before push
-engine=create_engine("postgresql://postgres:bindu1973@localhost/project1")
+engine=create_engine("postgresql://postgres:password@localhost/project1")
 db = scoped_session(sessionmaker(bind=engine))
 
 
