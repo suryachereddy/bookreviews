@@ -136,23 +136,27 @@ def books():
     return redirect(url_for('home'))
 
 
-@app.route("/books/<int:book_id>",methods=["post","get"])
+@app.route("/books/<int:book_id>")
 def book(book_id):
     if True:
         book=db.execute("SELECT * FROM books WHERE id=:id",{"id":book_id}).fetchone()
-        if request.method == "POST":
-            try:
-                rating=request.form.get("rating")
-                review=request.form.get("review")
-            except:
-                return render_template("home.html",username=session["username"])
-            db.execute("INSERT INTO reviews (rating,review,userid,bookid) values (:rating,:review,:userid,:bookid)",{"rating":rating,"review":review,"userid":session["id"],"bookid":book_id})
+        
         res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": KEY, "isbns": book.isbn})
         res=res.json()
         reviews=db.execute("SELECT * FROM reviews WHERE bookid=:id",{"id":book_id}).fetchall()
-        return render_template("book.html",username=session["username"],book=book,rating=res['books'][0]['average_rating'],reviews=reviews,error=error)
+        return render_template("book.html",username=session["username"],book=book,rating=res['books'][0]['average_rating'],reviews=reviews)
     else:
         return render_template("index.html",message="noob!!<br> login to access")
 
     
+@app.route("/bookreview",methods=["POST"])
+def bookreview(bookid):
+    if request.method == "POST":
+        try:
+            rating=request.form.get("rating")
+            review=request.form.get("review")
+        except ValueError:
+            return render_template("home.html",username=session["username"])
+        db.execute("INSERT INTO reviews (rating,review,userid,bookid) values (:rating,:review,:userid,:bookid)",{"rating":rating,"review":review,"userid":session["id"],"bookid":book_id})
+        return render_template()
 

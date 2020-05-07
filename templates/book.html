@@ -16,10 +16,8 @@
     <h6>ISBN:</h6><h3>{{book.isbn}}</h3><br>
 </div>
 <div class="container">
-    <form action="{{ url_for('book') }}" method="POST">
-        <div class="form-group">
-            <input class="form-control" type="password" name="password">
-        </div>
+    <form action="{{ url_for('bookreview',bookid=book.id) }}" method="POST">
+        
         
         <div class="form-group">
             <input class="form-control" type="text" for="comment" name="review" placeholder="your review">
