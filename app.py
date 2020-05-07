@@ -21,10 +21,10 @@ KEY="6iGmZfPMsrgbm0i8iqfcw"
 
 
 # Set up database (uncomment below before push)
-engine = create_engine(os.getenv("DATABASE_URL"))
+#engine = create_engine(os.getenv("DATABASE_URL"))
 
 #comment this before push
-#engine=create_engine("postgresql://postgres:password@localhost/project1")
+engine=create_engine("postgresql://postgres:password@localhost/project1")
 db = scoped_session(sessionmaker(bind=engine))
 
 
@@ -109,7 +109,7 @@ def title_search():
     except ValueError:
         return render_template("home.html",username=session["username"])
     result=db.execute("SELECT * FROM books WHERE title LIKE ('%'|| :title || '%')",{"title":title})
-    return render_template("result.html",username=session["username"],search_type="Title",search=title,result=result,next="title_search")
+    return render_template("result.html",name="title",username=session["username"],search_type="Title",search=title,result=result,next="title_search")
 
 
 @app.route("/isbn_search",methods=["post"])
@@ -119,7 +119,7 @@ def isbn_search():
     except ValueError:
         return render_template("home.html",username=session["username"])    
     result=db.execute("SELECT * FROM books WHERE isbn LIKE ('%' || :isbn || '%')",{"isbn":isbn})
-    return render_template("result.html",username=session["username"],search_type="ISBN",search=isbn,result=result,next="isbn_search")
+    return render_template("result.html",name="isbn",username=session["username"],search_type="ISBN",search=isbn,result=result,next="isbn_search")
 
 @app.route("/author_search",methods=["post"])
 def author_search():
@@ -129,7 +129,7 @@ def author_search():
         return render_template("home.html",username=session["username"])
     
     result=db.execute("SELECT * FROM books WHERE title LIKE ('%' || :author || '%')",{"author":author})
-    return render_template("result.html",username=session["username"],search_type="Author",search=title,result=result,next="author_search")
+    return render_template("result.html",name="author",username=session["username"],search_type="Author",search=title,result=result,next="author_search")
 
 
 @app.route("/title/<int:book_id>",methods=["post","get"])
