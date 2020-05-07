@@ -19,7 +19,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 KEY="6iGmZfPMsrgbm0i8iqfcw"
 
-
+session["id"]=None
 # Set up database (uncomment below before push)
 #engine = create_engine(os.getenv("DATABASE_URL"))
 
