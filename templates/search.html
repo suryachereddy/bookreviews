@@ -1,0 +1,27 @@
+{% extends "layout.html" %}
+
+{% block title %}
+    Book review- search
+{% endblock %}
+
+{% block body %}
+<div class="jumbotron text-center" style="background-color:salmon;">
+    <h1> Browse books and review them.</h1>
+    <h3 style="text-align: right;">{{username}}</h3> 
+</div>
+<div class="container">
+    <h1> Search by {{name}}</h1>
+    <form action="{{url_for(next)}}" method="POST" >
+        <div class="form-group">
+            <input type="text" name={{name}} class="form-control">
+        </div>
+        <div class="form-group">
+        <button class="btn btn-primary">Search</button>
+        </div>
+        
+
+    </form>
+
+</div>
+
+{% endblock %}
