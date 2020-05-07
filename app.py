@@ -62,7 +62,7 @@ def register():
 def home():
     if session["id"]==None:
         return render_template("index.html",message="noob!!<br> login to access")
-    if(flask.request.method=="GET"):
+    if(request.method=="GET"):
         return render_template("home.html",username=session["username"])
     try:
         username = request.form.get("username")
