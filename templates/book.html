@@ -30,7 +30,7 @@
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
-            <option value="5">4</option>
+            <option value="5">5</option>
           </select>
         <div class="form-group">
             <button class="btn btn-primary">submit</button>
@@ -39,12 +39,15 @@
 <div class="jumbotron">
     <div class="row">
         <h4>This website reviews:</h4>
-        <ul class="list-group">
-            {{%for review in reviews%}}
-            <li class="list-group-item"><a href="{{url_for(title_search)}}">Search by Title</a></li>
+        <div class="jumbotron">
+            {%for review in reviews%}
+           <h6> "{{review.review}}"" (RATED {{review.rating}})-by {{username}}</h6>
+        </div>
+            {%else%}
+            <h6> No reviews. Be the first to review this one!</h6>
+            {%endfor%}
             
-            
-        </ul>
+        
         
     </div>
 

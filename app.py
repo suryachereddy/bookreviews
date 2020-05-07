@@ -131,8 +131,12 @@ def author_search():
     result=db.execute("SELECT * FROM books WHERE title LIKE ('%' || :author || '%')",{"author":author})
     return render_template("result.html",name="author",username=session["username"],search_type="Author",search=title,result=result,next="author_search")
 
+@app.route("/books")
+def books():
+    return redirect(url_for('home'))
 
-@app.route("/title/<int:book_id>",methods=["post","get"])
+
+@app.route("/books/<int:book_id>",methods=["post","get"])
 def book(book_id):
     if True:
         book=db.execute("SELECT * FROM books WHERE id=:id",{"id":book_id}).fetchone()
@@ -141,7 +145,7 @@ def book(book_id):
                 rating=request.form.get("rating")
                 review=request.form.get("review")
             except:
-                error="invalid entry"
+                return render_template("home.html",username=session["username"])
             db.execute("INSERT INTO reviews (rating,review,userid,bookid) values (:rating,:review,:userid,:bookid)",{"rating":rating,"review":review,"userid":session["id"],"bookid":book_id})
         res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": KEY, "isbns": book.isbn})
         res=res.json()
