@@ -19,7 +19,7 @@ app.config["SESSION_TYPE"] = "filesystem"
 Session(app)
 KEY="6iGmZfPMsrgbm0i8iqfcw"
 
-session["id"]=None
+
 # Set up database (uncomment below before push)
 #engine = create_engine(os.getenv("DATABASE_URL"))
 
@@ -30,8 +30,9 @@ db = scoped_session(sessionmaker(bind=engine))
 
 @app.route("/")
 def root():
-    if session["id"]!=None:
-        return redirect('home')
+
+    #if session["id"]!=None:
+    #    return redirect(url_for('home'))
     return redirect(url_for('signin'))
 
 @app.route('/signin')
@@ -60,8 +61,8 @@ def register():
 
 @app.route("/home",methods=["POST","GET"])
 def home():
-    if session["id"]==None:
-        return render_template("index.html",message="noob!!<br> login to access")
+   # if session["id"]==None:
+   #     return render_template("index.html",message="noob!!<br> login to access")
     if(request.method=="GET"):
         return render_template("home.html",username=session["username"])
     try:
@@ -81,23 +82,23 @@ def home():
 
 @app.route("/title")
 def title():
-    if session["id"]==None:
-        return render_template("index.html",message="noob!!<br> login to access")
+  #  if session["id"]==None:
+   #     return render_template("index.html",message="noob!!<br> login to access")
 
     return render_template("search.html",username=session["username"],name="title",next="title_search")
     
 @app.route("/isbn")
 def isbn():
-    if session["id"]!=None:
-        return render_template("search.html",username=session["username"],name="isbn",next="isbn_search")
-    else:
-        return render_template("index.html",message="noob!!<br> login to access")
+  #  if session["id"]!=None:
+  #      return render_template("search.html",username=session["username"],name="isbn",next="isbn_search")
+  #  else:
+    return render_template("index.html",message="noob!!<br> login to access")
 @app.route("/author")
 def author():
-    if session["id"]!=None:
-        return render_template("search.html",username=session["username"],name="author",next="author_search")
-    else:
-        return render_template("index.html",message="noob!!<br> login to access")
+  #  if session["id"]!=None:
+    return render_template("search.html",username=session["username"],name="author",next="author_search")
+ #   else:
+   #     return render_template("index.html",message="noob!!<br> login to access")
 
 
 
@@ -133,7 +134,7 @@ def author_search():
 
 @app.route("/title/<int:book_id>",methods=["post","get"])
 def book(book_id):
-    if session["id"]!=None:
+    if True:
         book=db.execute("SELECT * FROM books WHERE id=:id",{"id":book_id}).fetchone()
         if request.method == "POST":
             try:
