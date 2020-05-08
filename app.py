@@ -128,7 +128,7 @@ def author_search():
     except ValueError:
         return render_template("home.html",username=session["username"])
     
-    result=db.execute("SELECT * FROM books WHERE title LIKE ('%' || :author || '%')",{"author":author})
+    result=db.execute("SELECT * FROM books WHERE author LIKE ('%' || :author || '%')",{"author":author})
     return render_template("result.html",name="author",username=session["username"],search_type="Author",search=title,result=result,next="author_search")
 
 @app.route("/books")
