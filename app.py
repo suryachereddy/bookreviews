@@ -149,7 +149,7 @@ def book(book_id):
         return render_template("index.html",message="noob!!<br> login to access")
 
     
-@app.route("/bookreview",methods=["POST"])
+@app.route("/bookreview/<int:bookid>",methods=["POST"])
 def bookreview(bookid):
     if request.method == "POST":
         try:
@@ -157,6 +157,17 @@ def bookreview(bookid):
             review=request.form.get("review")
         except ValueError:
             return render_template("home.html",username=session["username"])
-        db.execute("INSERT INTO reviews (rating,review,userid,bookid) values (:rating,:review,:userid,:bookid)",{"rating":rating,"review":review,"userid":session["id"],"bookid":book_id})
-        return render_template()
+        check=db.execute("SELECT * FROM reviews WHERE bookid=:bookid AND userid=:userid",{"bookid":bookid,"userid":session["id"]}).rowcount
+        if check==0:
+            db.execute("INSERT INTO reviews (rating,review,userid,bookid) values (:rating,:review,:userid,:bookid)",{"rating":rating,"review":review,"userid":session["id"],"bookid":bookid})
+            db.commit()
+        else:
+            book=db.execute("SELECT * FROM books WHERE id=:id",{"id":bookid}).fetchone()       
+            res = requests.get("https://www.goodreads.com/book/review_counts.json", params={"key": KEY, "isbns": book.isbn})
+            res=res.json()
+            reviews=db.execute("SELECT * FROM reviews WHERE bookid=:id",{"id":bookid}).fetchall()
+            return render_template("book.html",username=session["username"],book=book,rating=res['books'][0]['average_rating'],reviews=reviews,error="You can review only once :(")
+            
+    return redirect(url_for('book',book_id=bookid))
+        
 

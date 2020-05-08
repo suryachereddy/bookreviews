@@ -32,14 +32,16 @@
           </select>
         <div class="form-group">
             <button class="btn btn-primary">submit</button>
+            <p style="color: red;">{{error}}</p>
         </div>
+
 </div>
 <div class="jumbotron">
     <div class="row">
-        <h4>This website reviews:</h4>
+        <h4>This website reviews:</h4><br>
         <div class="jumbotron">
             {%for review in reviews%}
-           <h6> "{{review.review}}"" (RATED {{review.rating}})-by {{username}}</h6>
+           <h6> "{{review.review}}" (RATED {{review.rating}}/5)-by {{username}}</h6>
         </div>
             {%else%}
             <h6> No reviews. Be the first to review this one!</h6>
